@@ -25,8 +25,8 @@ import {
   Funnel,
   X,
 } from "@phosphor-icons/react";
-import { categories, lanes, matchesCategory } from "./content.js";
-import { Badge, Dialog, PageIntro, PointList, Notice } from "./ui.jsx";
+import { categories, lanes, matchesCategory, leisureCrafts } from "./content.js";
+import { Badge, Dialog, PageIntro, PointList, Notice, Section, DataTable } from "./ui.jsx";
 
 const icons = {
   beads: Diamond,
@@ -135,6 +135,19 @@ export function CategoryDetail({ category: c, onClose, favorite, onFavorite }) {
               <span key={x}>{x}</span>
             ))}
           </div>
+          {leisureCrafts.items.some((craft) => craft.categoryId === c.id) && (
+            <>
+              <h3>休闲手作体验与游戏灵感</h3>
+              {leisureCrafts.items.filter((craft) => craft.categoryId === c.id).map((craft) => (
+                <div className="craft-note" key={craft.name}>
+                  <h4>{craft.name}</h4>
+                  <p>{craft.makes} {craft.appeal}</p>
+                  {craft.loop && <p><strong>制作循环：</strong>{craft.loop}。{craft.recommendation}</p>}
+                </div>
+              ))}
+              <p className="boundary">{leisureCrafts.boundary}</p>
+            </>
+          )}
           <div className="detail-columns">
             <div>
               <h3>用户怎样创作</h3>
@@ -191,8 +204,30 @@ export default function Categories({
   return (
     <>
       <PageIntro title="找到值得开始的那个方向。">
-        从商品、编辑方式和履约出发，探索20个品类组。优先级是产品建议，不是市场热度排名。
+        从商品、编辑方式和履约出发，探索{categories.length}个品类组。优先级是产品建议，不是市场热度排名。
       </PageIntro>
+      <Section title={leisureCrafts.title} description={leisureCrafts.intro}>
+        <details className="craft-guide">
+          <summary>查看12种手作：做什么、吸引点与对应品类</summary>
+          <DataTable
+            headers={["手作类型", "具体做什么", "体验吸引点", "深入了解"]}
+            rows={leisureCrafts.items.map((craft) => [
+              craft.name, craft.makes, craft.appeal,
+              <button className="text-link" onClick={() => onOpen(categories.find((c) => c.id === craft.categoryId))} aria-label={`查看${craft.name}对应品类`}>
+                品类详情 <ArrowUpRight size={17} aria-hidden="true" />
+              </button>,
+            ])}
+          />
+        </details>
+        <details className="craft-guide">
+          <summary>饰品游戏优先参考的五个方向</summary>
+          <DataTable
+            headers={["方向", "制作循环", "适配建议"]}
+            rows={leisureCrafts.priority.flatMap((id) => leisureCrafts.items.filter((craft) => craft.categoryId === id && craft.loop).map((craft) => [craft.name, craft.loop, craft.recommendation]))}
+          />
+        </details>
+        <p className="boundary">{leisureCrafts.boundary}</p>
+      </Section>
       <div className="filter-panel">
         <div className="tabs" aria-label="品类分组">
           {lanes.map((l) => (

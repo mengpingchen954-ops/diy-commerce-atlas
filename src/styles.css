@@ -2309,6 +2309,32 @@ caption {
     padding: 13px 15px;
   }
 }
+.craft-guide {
+  margin: 12px 0;
+  border: 1px solid var(--border, #dce5df);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.craft-guide summary {
+  padding: 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.craft-guide .table-wrap {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+.craft-note {
+  margin: 14px 0;
+}
+.craft-note h4 {
+  margin: 0 0 5px;
+}
+.craft-note p {
+  margin: 5px 0;
+  line-height: 1.8;
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *:before,

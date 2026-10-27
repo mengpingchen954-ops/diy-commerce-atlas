@@ -36,6 +36,7 @@ export const categories = [
       "菩提",
       "水晶",
       "手串",
+      "串珠戒指",
       "项链",
       "脚链",
       "手机链",
@@ -93,6 +94,7 @@ export const categories = [
       "簪杆",
       "流苏",
       "珍珠发饰",
+      "压襟",
       "发夹",
     ],
     actions: ["选主石与结构", "部件配色", "刻字与纹样预览", "古风场景参考"],
@@ -376,7 +378,7 @@ export const categories = [
       "镜子",
       "收纳盒",
     ],
-    actions: ["选择底座", "胶色与纹理", "配件拖拽叠放", "保存并请朋友选款"],
+    actions: ["选择底座", "胶色与纹理", "挤胶与裱花", "配件拖拽叠放", "保存并请朋友选款"],
     merchants: ["奶油胶工作室", "DIY馆", "手作博主"],
     fulfill: ["成品定制", "材料包", "到店体验"],
     play: ["贴饰收藏", "主题挑战", "双人共创"],
@@ -408,6 +410,9 @@ export const categories = [
       "咕本",
       "手账套装",
       "拼豆",
+      "迷你拼豆",
+      "拼豆冰箱贴",
+      "立体拼豆小屋",
       "像素画",
       "数字油画",
       "十字绣",
@@ -443,12 +448,18 @@ export const categories = [
     items: [
       "石塑黏土",
       "超轻黏土",
+      "奶油土",
+      "迷你甜品与食玩",
       "软陶",
       "定制手办",
       "黏土冰箱贴",
       "滴胶摆件",
       "滴胶挂件",
+      "UV胶饰品",
+      "滴胶戒指",
       "流沙牌",
+      "流麻",
+      "流沙挂件",
       "热缩片",
     ],
     actions: ["素体和部件", "五官服饰配置", "干花亮片嵌入", "透明层参考"],
@@ -462,6 +473,7 @@ export const categories = [
     ],
     risks: [
       "滴胶有气泡、固化与位置偏差。",
+      "流麻／流沙挂件需单独确认壳体、液体相容性、封口防漏与流动效果，不能直接套用固化滴胶工艺。",
       "热缩片有缩率与变形。",
       "黏土和软陶手作不能保证像数字模型一样一致。",
     ],
@@ -762,6 +774,14 @@ export const categories = [
       "羊毛毡",
       "戳戳乐",
       "扭扭棒",
+      "毛根花束",
+      "扭扭棒小动物与盆栽",
+      "钩针",
+      "毛线编织",
+      "钩针玩偶与包包",
+      "戳戳绣",
+      "簇绒Tufting",
+      "簇绒杯垫与地毯",
       "钉子画",
       "玻璃马赛克",
       "陶艺彩绘",
@@ -781,10 +801,12 @@ export const categories = [
       "展示材料、步骤、人数和时长。",
       "到店前备料，完成后记录实物作品。",
       "积木和微缩场景维护零件、连接兼容、结构与材料包清单。",
+      "毛线项目记录线材、针号、尺寸和图解；戳戳绣／簇绒另记底布、绣框或设备及背面处理。",
     ],
     risks: [
       "流纹、沙层、烧制和手艺不可完全控制。",
       "微小部件、工具和材料按实际人群与活动管理。",
+      "羊毛毡戳针塑形、戳戳绣成圈和簇绒制作的工具与工艺不同，不因名称相近而混用教程。",
       "无需为首版体验预约开发真实流体或复杂3D仿真。",
     ],
     note: "适合线下手作馆工具，线上主要提供参考、预约、备料和记录。",
@@ -826,6 +848,85 @@ export const categories = [
     note: "适合作为创作入口；同一设计可用在T恤、托特包、徽章、贴纸和贺卡。",
   },
 ];
+
+export const leisureCrafts = {
+  title: "年轻女性休闲手作灵感",
+  intro: "围绕过程解压、自由搭配、成品可展示或送人的体验，整理12种休闲手作，供年轻女性受众选题与产品策划参考；实际偏好因人而异。",
+  boundary: "以下来自本次对话的手作选题整理，未核验实时平台数据，不是当下最受欢迎排行，也不代表已验证的市场需求。五个优先方向按饰品游戏的玩法适配推荐。",
+  items: [
+    {
+      name: "拼豆／迷你拼豆", categoryId: "pixel",
+      makes: "按像素图摆豆，制作挂件、冰箱贴、立体小屋。",
+      appeal: "一颗颗填满的过程解压，完成目标清晰。",
+      loop: "选图 → 摆豆 → 熨烫 → 变成挂件",
+      recommendation: "目标清晰、容易上手，适合解压体验。",
+    },
+    {
+      name: "串珠饰品", categoryId: "beads",
+      makes: "制作手链、戒指、项链、手机链与包挂。",
+      appeal: "配色自由，成品能佩戴，也适合朋友一起创作。",
+      loop: "选珠子 → 配色 → 穿线 → 试戴",
+      recommendation: "最贴合饰品主题，搭配与佩戴形成完整反馈。",
+    },
+    {
+      name: "奶油胶DIY", categoryId: "cream",
+      makes: "给手机壳、镜子、发夹挤胶裱花，再贴上小配件。",
+      appeal: "裱花操作有趣，装饰自由，容易形成可爱成品。",
+      loop: "选底壳 → 挤花 → 摆配件 → 展示成品",
+      recommendation: "适合突出装饰过程与操作反馈。",
+    },
+    {
+      name: "扭扭棒／毛根手作", categoryId: "experience",
+      makes: "扭出花束、小动物、盆栽与戒指。",
+      appeal: "材料门槛较低、上手快，造型变化多；实际成本按材料确认。",
+    },
+    {
+      name: "黏土／奶油土", categoryId: "resin-clay",
+      makes: "捏迷你甜品、小动物、食玩、冰箱贴。",
+      appeal: "揉捏与塑形有治愈感，适合营造迷你世界。",
+      loop: "揉捏 → 塑形 → 上色 → 安装配件",
+      recommendation: "创作空间大，可从有限形状与部件开始。",
+    },
+    {
+      name: "滴胶／UV胶", categoryId: "resin-clay",
+      makes: "制作透明吊坠、戒指，封入干花与亮片。",
+      appeal: "透明、闪亮、有层次，适合表达饰品质感。",
+      loop: "选模具 → 调色 → 放装饰 → 固化脱模",
+      recommendation: "揭晓成品有期待感，可先用固定模具与分层预览。",
+    },
+    {
+      name: "热缩片", categoryId: "resin-clay",
+      makes: "画图、上色，加热缩小后制成挂件。",
+      appeal: "把自己的画变成可以随身携带的饰品。",
+    },
+    {
+      name: "流麻／流沙挂件", categoryId: "resin-clay",
+      makes: "在透明壳中搭配亮片、装饰与流动液体。",
+      appeal: "摇晃时有动态效果，适合主题周边和展示。",
+    },
+    {
+      name: "钩针／毛线编织", categoryId: "experience",
+      makes: "制作小玩偶、花束、杯垫与包包。",
+      appeal: "慢节奏、有陪伴感，成品兼具装饰与实用性。",
+    },
+    {
+      name: "戳戳绣／簇绒Tufting", categoryId: "experience",
+      makes: "用相应工具制作毛茸茸的杯垫、镜框与地毯。",
+      appeal: "触感柔软，填充图案的过程有满足感。",
+    },
+    {
+      name: "羊毛毡", categoryId: "experience",
+      makes: "将羊毛戳成猫狗、小动物与挂件。",
+      appeal: "毛茸茸的立体造型，适合宠物形象和礼物定制。",
+    },
+    {
+      name: "古风饰品DIY", categoryId: "jewelry",
+      makes: "制作发簪、绒花、缠花与压襟。",
+      appeal: "搭配感和展示感强，适合汉服审美。",
+    },
+  ],
+  priority: ["beads", "cream", "pixel", "resin-clay"],
+};
 
 export const engines = [
   [
@@ -1609,6 +1710,7 @@ export const sourceNotes = [
   "资料来自本次对话两批长文本、此前整理回复、一份用户粘贴文本附件，以及十张好运成串截图。重复内容归并，近似购物车截图去重。",
   "这是项目研究与产品策划资料库，不是已运行的交易系统，不提供真实下单、抽奖、支付或商家结算。",
   "自营定制专题来自后续对话：用户提出自己采购T恤并加工，或筛选礼盒商品、外协包装后自己组装发货；生产、成本和试单安排为建议，未完成采购与经营验证。",
+  "休闲手作灵感来自后续对话，补充12种手作的制作内容、体验吸引点及五个饰品游戏方向；未核验实时热度，属于选题与玩法适配建议。",
   "“截图可见”仅证明该界面或文案出现；“文案声明”不证明实际行为已实现。产品建议、待核验竞品和定价草案均有对应标记。",
   "品类按产品逻辑整理，不宣称按市场热度排序。全站数量由资料条目计算，不是市场规模、用户数或业绩。",
   "各路线的优先级来自不同目标：串珠是已选原型；T恤／帆布包是印花线排序；穿戴甲是新重点；咕卡／奶油胶是第二品类候选。",
@@ -1631,6 +1733,7 @@ export function matchesCategory(category, query = "") {
     ...category.play,
     ...category.mvp,
     ...category.risks,
+    ...leisureCrafts.items.filter((craft) => craft.categoryId === category.id).flatMap((craft) => [craft.name, craft.makes, craft.appeal, craft.loop || "", craft.recommendation || ""]),
   ]
     .join(" ")
     .toLocaleLowerCase();
@@ -1641,7 +1744,7 @@ export function getSearchRecords() {
   const records = categories.map((c) => ({
     id: c.id,
     title: c.name,
-    text: [c.desc, ...c.items, ...c.mvp, ...c.risks, c.note].join(" "),
+    text: [c.desc, ...c.items, ...c.mvp, ...c.risks, c.note, ...leisureCrafts.items.filter((craft) => craft.categoryId === c.id).flatMap((craft) => [craft.name, craft.makes, craft.appeal, craft.loop || "", craft.recommendation || ""])].join(" "),
     page: "categories",
     kind: "品类",
   }));
@@ -1737,6 +1840,9 @@ export function exportMarkdown() {
     `| ${headers.join(" | ")} |\n| ${headers.map(() => "---").join(" | ")} |\n${rows.map((row) => `| ${row.join(" | ")} |`).join("\n")}\n\n`;
   let out = `# ${site.title}\n\n整理日期：${site.updated}\n\n${site.description}\n\n${site.formula.join(" → ")}\n\n`;
   out += "## 信息分类\n\n" + table(["维度", "问题", "举例"], taxonomy);
+  out += `## ${leisureCrafts.title}\n\n${leisureCrafts.intro}\n\n${leisureCrafts.boundary}\n\n`;
+  out += table(["手作", "具体做什么", "体验吸引点"], leisureCrafts.items.map((craft) => [craft.name, craft.makes, craft.appeal]));
+  out += "### 饰品游戏优先参考的五个方向\n\n" + table(["方向", "制作循环", "适配建议"], leisureCrafts.priority.flatMap((id) => leisureCrafts.items.filter((craft) => craft.categoryId === id && craft.loop).map((craft) => [craft.name, craft.loop, craft.recommendation])));
   out += "## 品类地图\n\n";
   for (const c of categories)
     out += `### ${c.name}\n\n${c.desc}\n\n品类：${c.items.join("、")}。\n\n状态：${c.stage}；编辑方式：${c.engine}；复杂度：${c.complexity}。\n\n适配商家：${c.merchants.join("、")}。\n\n履约：${c.fulfill.join("、")}。\n\n操作：${c.actions.join("、")}。\n\n玩法：${c.play.join("、")}。\n\n最小方案：\n${c.mvp.map((s) => "- " + s).join("\n")}\n\n边界：\n${c.risks.map((s) => "- " + s).join("\n")}\n\n${c.note}\n\n`;

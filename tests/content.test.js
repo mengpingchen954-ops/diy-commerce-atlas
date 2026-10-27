@@ -10,6 +10,7 @@ import {
   matchesCategory,
   exportMarkdown,
   selfOperation,
+  leisureCrafts,
 } from "../src/content.js";
 
 test("所有品类保留独立制作规则、交付方式和边界", () => {
@@ -127,4 +128,25 @@ test("公开截图副本存在，原始附件不属于站点资源", () => {
       new URL("../public/references/bracelet-detail.jpg", import.meta.url),
     ),
   );
+});
+
+test("休闲手作关联有效，体验建议同时进入品类搜索、全站搜索与下载", () => {
+  assert.equal(leisureCrafts.items.length, 12);
+  assert.equal(leisureCrafts.items.filter((craft) => craft.loop).length, 5);
+  const records = getSearchRecords();
+  const markdown = exportMarkdown();
+  for (const craft of leisureCrafts.items) {
+    const category = categories.find((c) => c.id === craft.categoryId);
+    assert.ok(category, craft.name);
+    const record = records.find((r) => r.page === "categories" && r.id === craft.categoryId);
+    for (const text of [craft.name, craft.makes, craft.appeal, craft.loop, craft.recommendation].filter(Boolean)) {
+      assert.ok(matchesCategory(category, text), text);
+      assert.ok(record.text.includes(text), text);
+      assert.ok(markdown.includes(text), text);
+    }
+  }
+  assert.equal(new Set(records.map((r) => r.page + r.id)).size, records.length);
+  assert.ok(markdown.includes(leisureCrafts.boundary));
+  for (const word of ["钩针", "戳戳绣", "毛根", "流麻", "Tufting", "奶油土", "迷你拼豆"])
+    assert.ok(categories.some((c) => matchesCategory(c, word)), word);
 });
