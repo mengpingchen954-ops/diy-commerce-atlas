@@ -1,5 +1,7 @@
 # 手作生意图谱
 
+[打开网站](https://mengpingchen954-ops.github.io/diy-commerce-atlas/) · [验收记录](docs/QA.md)
+
 中文游戏化DIY商业研究资料库。根据用户在本次对话提供的文本、粘贴附件和好运成串参考截图整理，合并重复内容，保留具体品类、玩法、收费草案、商家服务、产品能力与验证边界。
 
 网站是可浏览的资料工具，不是实际支付、抽奖或多商家交易系统。
@@ -23,6 +25,7 @@ npm ci
 npm test
 npm run dev
 npm run build
+node tests/public.mjs
 ```
 
 内容在 `src/content.js`，页面组件在 `src/Pages.jsx`。构建先由 `scripts/export.mjs` 生成 `public/资料总集.md`，再由Vite构建到 `dist`。更新内容后重新构建，下载文件与网站同步。
