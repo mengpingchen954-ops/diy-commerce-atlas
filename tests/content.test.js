@@ -9,6 +9,7 @@ import {
   getSearchRecords,
   matchesCategory,
   exportMarkdown,
+  selfOperation,
 } from "../src/content.js";
 
 test("所有品类保留独立制作规则、交付方式和边界", () => {
@@ -94,9 +95,26 @@ test("导出资料涵盖全部品类、定价草案、参考对象与假设修�
     "截图证据",
     "经营与成本",
     "跨品类工坊设想",
+    "自营定制",
   ])
     assert.ok(out.includes("## " + heading), heading);
   assert.ok(!/1[3-9]\d{9}/.test(out), "导出不包含手机号");
+});
+test("自营方案在搜索和下载中完整可达，生产建议保留验证边界", () => {
+  const records = getSearchRecords();
+  const out = exportMarkdown();
+  for (const section of selfOperation.sections) {
+    const record = records.find((r) => r.page === "self-operated" && r.id === section.id);
+    assert.ok(record, section.id);
+    for (const row of section.rows)
+      for (const cell of row) {
+        assert.ok(record.text.includes(cell), cell);
+        assert.ok(out.includes(cell), cell);
+      }
+  }
+  assert.match(selfOperation.boundary, /尚未完成采购/);
+  for (const word of ["拼多多", "转印膜", "整盒定制印刷", "婚宴", "订单人工"])
+    assert.ok(records.some((r) => r.page === "self-operated" && r.text.includes(word)), word);
 });
 test("公开截图副本存在，原始附件不属于站点资源", () => {
   for (const e of evidence)

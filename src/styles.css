@@ -435,6 +435,7 @@ main:focus {
   margin: 5px 0 0;
 }
 .section {
+  scroll-margin-top: 100px;
   margin: 0 0 38px;
   min-width: 0;
 }

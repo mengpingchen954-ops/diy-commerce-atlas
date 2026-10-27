@@ -25,6 +25,7 @@ import {
   Overview,
   MechanicsPage,
   BusinessPage,
+  SelfOperationPage,
   MerchantsPage,
   EnginePage,
   EvidencePage,
@@ -38,6 +39,7 @@ const nav = [
   ["categories", "品类地图", Compass],
   ["mechanics", "玩法机制", GameController],
   ["business", "商业模式", Storefront],
+  ["self-operated", "自营定制", Storefront],
   ["merchants", "商家与服务", UsersThree],
   ["engine", "产品引擎", Stack],
   ["evidence", "案例与截图", Images],
@@ -125,7 +127,7 @@ function Search({ open, onClose, onSelect }) {
         </>
       ) : (
         <div className="search-hints">
-          <p>搜索覆盖品类、玩法、商业模式、商家服务、案例、路线与研究备忘。</p>
+          <p>搜索覆盖品类、玩法、商业模式、自营定制、商家服务、案例、路线与研究备忘。</p>
           <div className="chips">
             {["穿戴甲", "材料包", "佣金", "版权", "预约"].map((q) => (
               <button key={q} onClick={() => setQuery(q)}>
@@ -337,6 +339,7 @@ export default function App() {
               )}
               {page === "mechanics" && <MechanicsPage />}
               {page === "business" && <BusinessPage />}
+              {page === "self-operated" && <SelfOperationPage />}
               {page === "merchants" && <MerchantsPage />}
               {page === "engine" && <EnginePage />}
               {page === "evidence" && <EvidencePage onImage={setImage} />}

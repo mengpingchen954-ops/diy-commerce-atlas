@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { evidence, categories } from '../src/content.js';
+import { evidence, categories, selfOperation } from '../src/content.js';
 
 const base = new URL(process.argv[2] || 'https://mengpingchen954-ops.github.io/diy-commerce-atlas/');
 const home = await fetch(base);
@@ -31,5 +31,10 @@ for (const category of categories) {
   for (const item of category.items) assert.ok(markdown.includes(item), item);
 }
 assert.ok(markdown.includes('定价草案'));
+for (const section of selfOperation.sections) {
+  assert.ok(markdown.includes(section.title), section.title);
+  for (const row of section.rows)
+    for (const cell of row) assert.ok(markdown.includes(cell), cell);
+}
 assert.ok(!/1[3-9]\d{9}/.test(markdown), '公开资料不得包含手机号');
 console.log(JSON.stringify({ home: 200, resources: resources.length, download: 200, categoryGroups: categories.length, catalogItems: categories.reduce((n,c)=>n+c.items.length,0) }));

@@ -35,6 +35,7 @@ import {
   routes,
   safeguards,
   sourceNotes,
+  selfOperation,
 } from "./content.js";
 import {
   Badge,
@@ -58,7 +59,7 @@ export function Overview({ navigate, onOpen }) {
             <br />
             变成可经营的生意。
           </h1>
-          <p>游戏化 DIY 的品类、玩法与商业路径，都在这里。</p>
+          <p>游戏化 DIY 的品类、玩法、自营定制与商业路径，都在这里。</p>
           <div className="hero-actions">
             <button
               className="button primary"
@@ -115,7 +116,7 @@ export function Overview({ navigate, onOpen }) {
       </div>
       <Section
         title="一个创作闭环，多种经营可能。"
-        description="用户自己设计，商家负责供货与制作，软件连接方案、材料和订单。"
+        description="用户自己设计，你可自行选品制作发货，也可提供软件帮助商家经营。"
       >
         <div className="flow-strip">
           {site.formula.map((s, i) => (
@@ -202,6 +203,24 @@ export function Overview({ navigate, onOpen }) {
           </div>
         </Section>
       </div>
+      <Section
+        title="从自己选品，到把定制商品寄出去。"
+        description="新增自营路线：T恤自己加工；生日／婚宴礼盒自己选品，外协包装后组装发货。"
+      >
+        <div className="scenario-grid">
+          <div>
+            <h3>DIY印花T恤</h3>
+            <p>采购样衣 → 用户设计图案 → 确认印稿 → 自己热压与质检 → 发货。</p>
+          </div>
+          <div>
+            <h3>DIY生日／婚宴礼盒</h3>
+            <p>筛选商品 → 用户选内容与包装 → 包装公司制作 → 自己装箱与质检 → 发货。</p>
+          </div>
+        </div>
+        <TextLink onClick={() => navigate("self-operated")}>
+          查看自营流程、设备与试单建议
+        </TextLink>
+      </Section>
       <Notice>
         <strong>阅读提示：</strong>
         这里整理的是项目设想与验证路径。截图证据、产品建议、定价草案与待核验判断分别标注，数量来自资料条目，不代表市场规模或经营业绩。
@@ -279,7 +298,7 @@ export function BusinessPage() {
   return (
     <>
       <PageIntro title="软件、服务与交易，各有价值。">
-        基础 SaaS 加可选代运营和供应链服务。按实际交付收费，按实际角色承担责任。
+        SaaS、代运营、供应链与自营定制可分阶段选择。按实际交付收费，按实际角色承担责任。
       </PageIntro>
       <div className="business-model">
         <div>
@@ -294,6 +313,10 @@ export function BusinessPage() {
           <p>在约定范围内提供获客、内容或运营，记录订单归因与结算。</p>
         </div>
       </div>
+      <Notice>
+        新增自营路线：自己选品、加工或组装、质检并发货，收入来自实物商品。
+        <a href="#self-operated">查看T恤与礼盒的自营方案 →</a>
+      </Notice>
       <Section title="收入方式与交付边界">
         <DataTable
           headers={["收入项目", "交付内容", "收费方式", "适用阶段", "服务边界"]}
@@ -333,9 +356,9 @@ export function BusinessPage() {
               "软件、培训、维护；实际参与交易的责任另行明确",
             ],
             [
-              "C端自营示范店",
-              "自己接订单，验证设计到实物的完整体验",
-              "选品、获客、供应链、物流与售后",
+              "C端自营可视化定制店",
+              "自己接订单、加工T恤或组装礼盒，获取商品收入并验证完整体验",
+              "选品、获客、制作、质检、物流与售后",
             ],
             [
               "综合多商家平台",
@@ -350,6 +373,34 @@ export function BusinessPage() {
           商品收入应覆盖材料、工艺人工、包装物流、支付相关费用、获客、平台服务、损耗和售后。软件收入也应覆盖素材支持、培训、维护与基础设施。按真实数据填写，不在资料阶段预设利润或回本时间。
         </p>
       </Section>
+    </>
+  );
+}
+
+export function SelfOperationPage() {
+  return (
+    <>
+      <PageIntro title="用户自己设计，你把它做成商品。">
+        {selfOperation.intro}
+      </PageIntro>
+      <Notice>
+        <strong>经营设想与试单建议：</strong>{selfOperation.boundary}
+      </Notice>
+      <div className="chips">
+        {selfOperation.sections.map((section) => (
+          <button
+            key={section.id}
+            onClick={() => document.getElementById(section.id)?.scrollIntoView({ block: "start" })}
+          >
+            {section.title.split("：")[0]}
+          </button>
+        ))}
+      </div>
+      {selfOperation.sections.map((section) => (
+        <Section key={section.id} id={section.id} title={section.title} description={section.description}>
+          <DataTable headers={section.headers} rows={section.rows} />
+        </Section>
+      ))}
     </>
   );
 }
@@ -503,6 +554,10 @@ export function RoadmapPage() {
       <PageIntro title="从一个真实闭环，走向可复用产品。">
         先证明用户能设计、商家能交付，再判断收费与跨品类复用。阶段没有预设工期。
       </PageIntro>
+      <Notice>
+        下列阶段保留原SaaS与串珠验证路线。若先做自营，可从一个T恤或礼盒样品开始，记录付费试单、质量、人工与成本。
+        <a href="#self-operated">查看自营试单安排 →</a>
+      </Notice>
       <div className="timeline">
         {roadmap.map((r, i) => (
           <article key={r.title} id={r.title}>
