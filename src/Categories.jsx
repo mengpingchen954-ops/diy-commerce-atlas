@@ -211,6 +211,7 @@ export default function Categories({
             <MagnifyingGlass size={20} aria-hidden="true" />
             <span className="sr-only">搜索品类、商品或商家</span>
             <input
+              aria-label="搜索品类、商品或商家"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="搜索品类、商品或商家…"
@@ -229,6 +230,7 @@ export default function Categories({
             <Funnel size={17} aria-hidden="true" />
             <span className="sr-only">按履约方式筛选</span>
             <select
+              aria-label="按履约方式筛选"
               value={delivery}
               onChange={(e) => setDelivery(e.target.value)}
             >

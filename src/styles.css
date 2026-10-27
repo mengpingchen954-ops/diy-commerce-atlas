@@ -891,6 +891,9 @@ main:focus {
   border-radius: var(--radius);
   scrollbar-width: thin;
 }
+tr[id], .timeline article, .service-grid article, .evidence-card, .correction-list details {
+  scroll-margin-top: 100px;
+}
 table {
   width: 100%;
   border-collapse: collapse;
