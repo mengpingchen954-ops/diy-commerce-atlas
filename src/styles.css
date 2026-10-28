@@ -1275,7 +1275,7 @@ caption {
   padding: 23px 25px;
   min-width: 0;
 }
-.timeline h2 {
+.timeline :is(h2, h3) {
   font-size: 1.5rem;
   margin-bottom: 9px;
 }
@@ -2243,7 +2243,7 @@ caption {
   .timeline article > div {
     padding: 18px 16px;
   }
-  .timeline h2 {
+  .timeline :is(h2, h3) {
     font-size: 1.3125rem;
   }
   .timeline p {

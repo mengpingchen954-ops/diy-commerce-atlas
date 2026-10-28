@@ -206,6 +206,10 @@ export default function Categories({
       <PageIntro title="找到值得开始的那个方向。">
         从商品、编辑方式和履约出发，探索{categories.length}个品类组。优先级是产品建议，不是市场热度排名。
       </PageIntro>
+      <Notice>
+        选好方向后，从需求验证、注册备案、AI开发、真机测试走到审核发布与变现。
+        <a href="#roadmap">查看微信小程序完整开发路线 →</a>
+      </Notice>
       <Section title={leisureCrafts.title} description={leisureCrafts.intro}>
         <details className="craft-guide">
           <summary>查看12种手作：做什么、吸引点与对应品类</summary>

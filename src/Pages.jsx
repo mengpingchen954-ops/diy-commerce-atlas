@@ -26,6 +26,7 @@ import {
   flow,
   acquisition,
   roadmap,
+  developmentGuide,
   metrics,
   evidence,
   competitors,
@@ -551,33 +552,64 @@ export function EvidencePage({ onImage }) {
 export function RoadmapPage() {
   return (
     <>
-      <PageIntro title="从一个真实闭环，走向可复用产品。">
-        先证明用户能设计、商家能交付，再判断收费与跨品类复用。阶段没有预设工期。
+      <PageIntro title="从需求到上线，把完整路线走通。">
+        先用AI完成微信小程序的核心流程，再验证真实使用、变现与交付，逐步扩展手作业务。
       </PageIntro>
-      <Notice>
-        下列阶段保留原SaaS与串珠验证路线。若先做自营，可从一个T恤或礼盒样品开始，记录付费试单、质量、人工与成本。
-        <a href="#self-operated">查看自营试单安排 →</a>
-      </Notice>
-      <div className="timeline">
-        {roadmap.map((r, i) => (
-          <article key={r.title} id={r.title}>
-            <span className="timeline-number">0{i + 1}</span>
-            <div>
-              <h2>{r.title}</h2>
-              <p>{r.text}</p>
-              <div className="chips">
-                {r.deliver.map((d) => (
-                  <span key={d}>{d}</span>
-                ))}
+      <Section id={developmentGuide.id} title={developmentGuide.title} description={developmentGuide.intro}>
+        <p>
+          需求验证 → 注册备案 → 需求与材料 → 第一版与数据 → 修改优化 → 真机验收 → 审核发布 → 变现验证 → 获客迭代
+        </p>
+        <p><a href="https://mp.weixin.qq.com/" target="_blank" rel="noreferrer">微信公众平台：注册与管理入口 ↗</a></p>
+        <div className="timeline">
+          {developmentGuide.steps.map((step, index) => (
+            <article key={step.id} id={step.id}>
+              <span className="timeline-number">{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <PointList items={step.tasks} />
+                <p><strong>交付物：</strong>{step.deliver}</p>
+                <div className="gate">
+                  <CheckCircle size={19} weight="duotone" />
+                  <span>完成标准：{step.gate}</span>
+                </div>
               </div>
-              <div className="gate">
-                <CheckCircle size={19} weight="duotone" />
-                <span>推进依据：{r.gate}</span>
+            </article>
+          ))}
+        </div>
+        <Notice>{developmentGuide.boundary}</Notice>
+      </Section>
+      <Section title="数据存储怎么选" description="需要保存数据，不等于必须单独租用云服务器。按同步、权限和交易需求选择。">
+        <DataTable headers={["方案", "适用需求", "条件与边界"]} rows={developmentGuide.storage} />
+      </Section>
+      <Section title="变现方式与验证" description="先选适合业务的收入来源，再核对资格和规则。上线成功与变现成功分别验收。">
+        <DataTable headers={["收入来源", "适用场景", "开通与验证要点"]} rows={developmentGuide.monetization} />
+      </Section>
+      <Section title="手作业务的产品验证路线" description="先证明用户能设计、商家能交付，再判断收费与跨品类复用。以下保留原有业务路线。">
+        <Notice>
+          下列阶段保留原SaaS与串珠验证路线。若先做自营，可从一个T恤或礼盒样品开始，记录付费试单、质量、人工与成本。
+          <a href="#self-operated">查看自营试单安排 →</a>
+        </Notice>
+        <div className="timeline">
+          {roadmap.map((r, i) => (
+            <article key={r.title} id={r.title}>
+              <span className="timeline-number">0{i + 1}</span>
+              <div>
+                <h3>{r.title}</h3>
+                <p>{r.text}</p>
+                <div className="chips">
+                  {r.deliver.map((d) => (
+                    <span key={d}>{d}</span>
+                  ))}
+                </div>
+                <div className="gate">
+                  <CheckCircle size={19} weight="duotone" />
+                  <span>推进依据：{r.gate}</span>
+                </div>
               </div>
-            </div>
-          </article>
-        ))}
-      </div>
+            </article>
+          ))}
+        </div>
+      </Section>
       <Section title="四条路线分别排序">
         <DataTable headers={["路线", "顺序", "主要验证"]} rows={routes} />
       </Section>

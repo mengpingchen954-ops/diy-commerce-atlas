@@ -11,6 +11,7 @@ import {
   exportMarkdown,
   selfOperation,
   leisureCrafts,
+  developmentGuide,
 } from "../src/content.js";
 
 test("所有品类保留独立制作规则、交付方式和边界", () => {
@@ -128,6 +129,30 @@ test("公开截图副本存在，原始附件不属于站点资源", () => {
       new URL("../public/references/bracelet-detail.jpg", import.meta.url),
     ),
   );
+});
+
+test("完整开发路线的步骤、交付和边界同步进入搜索与下载", () => {
+  const records = getSearchRecords();
+  const markdown = exportMarkdown();
+  assert.equal(developmentGuide.steps.length, 9);
+  assert.equal(new Set(developmentGuide.steps.map((step) => step.id)).size, 9);
+  for (const step of developmentGuide.steps) {
+    const record = records.find((r) => r.page === "roadmap" && r.id === step.id);
+    assert.ok(record, step.id);
+    for (const text of [step.title, ...step.tasks, step.deliver, step.gate]) {
+      assert.ok((record.title + record.text).includes(text), text);
+      assert.ok(markdown.includes(text), text);
+    }
+  }
+  for (const row of [...developmentGuide.storage, ...developmentGuide.monetization]) {
+    const record = records.find((r) => r.page === "roadmap" && r.id === row[0]);
+    for (const text of row) {
+      assert.ok((record.title + record.text).includes(text), text);
+      assert.ok(markdown.includes(text), text);
+    }
+  }
+  assert.ok(markdown.includes(developmentGuide.boundary));
+  assert.ok(markdown.includes("审核1—2个工作日”仅是案例经验"));
 });
 
 test("休闲手作关联有效，体验建议同时进入品类搜索、全站搜索与下载", () => {
