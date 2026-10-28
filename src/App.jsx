@@ -21,6 +21,7 @@ import {
 } from "@phosphor-icons/react";
 import { site, categories, getSearchRecords } from "./content.js";
 import Categories, { CategoryDetail } from "./Categories.jsx";
+import InteractionsPage from "./Interactions.jsx";
 import {
   Overview,
   MechanicsPage,
@@ -42,6 +43,7 @@ const nav = [
   ["self-operated", "自营定制", Storefront],
   ["merchants", "商家与服务", UsersThree],
   ["engine", "产品引擎", Stack],
+  ["interactions", "交互设计", SquaresFour],
   ["evidence", "案例与截图", Images],
   ["roadmap", "落地路线", Path],
   ["notes", "研究备忘", Notebook],
@@ -127,7 +129,7 @@ function Search({ open, onClose, onSelect }) {
         </>
       ) : (
         <div className="search-hints">
-          <p>搜索覆盖品类、玩法、商业模式、自营定制、商家服务、案例、路线与研究备忘。</p>
+          <p>搜索覆盖品类、玩法、商业模式、自营定制、商家服务、交互设计、案例、路线与研究备忘。</p>
           <div className="chips">
             {["穿戴甲", "材料包", "佣金", "版权", "预约"].map((q) => (
               <button key={q} onClick={() => setQuery(q)}>
@@ -342,6 +344,7 @@ export default function App() {
               {page === "self-operated" && <SelfOperationPage />}
               {page === "merchants" && <MerchantsPage />}
               {page === "engine" && <EnginePage />}
+              {page === "interactions" && <InteractionsPage />}
               {page === "evidence" && <EvidencePage onImage={setImage} />}
               {page === "roadmap" && <RoadmapPage />}
               {page === "notes" && <NotesPage />}

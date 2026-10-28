@@ -893,7 +893,7 @@ main:focus {
   border-radius: var(--radius);
   scrollbar-width: thin;
 }
-tr[id], .timeline article, .service-grid article, .evidence-card, .correction-list details {
+tr[id], .section[id], .timeline article, .service-grid article, .evidence-card, .correction-list details {
   scroll-margin-top: 100px;
 }
 table {
@@ -1234,6 +1234,22 @@ caption {
 .timeline {
   padding: 4px 0 0;
   margin-bottom: 38px;
+}
+.prompt-copy {
+  padding: 18px;
+  border-top: 1px solid var(--line);
+}
+.prompt-copy pre {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  line-height: 1.9;
+  user-select: text;
+}
+.prompt-status {
+  min-height: 1.9em;
+  color: var(--accent);
 }
 .timeline article {
   display: flex;

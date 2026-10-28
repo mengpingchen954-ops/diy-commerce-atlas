@@ -209,6 +209,9 @@ export default function Categories({
       <Notice>
         选好方向后，从需求验证、注册备案、AI开发、真机测试走到审核发布与变现。
         <a href="#roadmap">查看微信小程序完整开发路线 →</a>
+        <br />
+        界面细节可参考六种弹窗动效及AI生成提示词。
+        <a href="#interactions">查看弹窗交互设计 →</a>
       </Notice>
       <Section title={leisureCrafts.title} description={leisureCrafts.intro}>
         <details className="craft-guide">

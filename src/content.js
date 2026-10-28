@@ -1385,6 +1385,81 @@ export const acquisition = [
   ["实物晒单", "展示设计变成实物的效果", "授权、真实展示、个人信息保护"],
 ];
 
+export const popupDesign = {
+  title: "六种弹窗交互设计",
+  intro: "用分层视觉保留原页面的上下文，用动态反馈表达进度、状态与信息展开。以下收录设计参考和可复制的AI生成提示词，供App、小程序与网页界面策划使用。",
+  boundary: "来自用户分享的教程摘要。提示词已修正无效曲线及透明度写法，并补充适配与验收条件；属于实现建议，尚未生成或实测这六种动效，不保证一次生成即可投入使用。",
+  principles: [
+    "保留上下文：用遮罩、背景模糊与面板入场建立前后层级，让用户知道自己仍在原页面。",
+    "反馈与状态一致：圆环、数字、刻度和进度条使用同一真实数据，动效结束后的显示值应准确；不用动画延迟关键操作。",
+    "信息按需展开：摘要先展示，完整详情通过抽屉、翻面或拖动展开；始终提供明确的返回或关闭入口。",
+    "提示词描述完整流程：触发方式 → 面板运动 → 背景变化 → 数据反馈 → 关闭或回退，再补充时长、曲线和手势阈值。",
+  ],
+  commonPrompt: "通用要求：先明确目标是Web、微信原生小程序还是跨端框架，使用该平台支持的API。适配安全区、窄屏和长内容；提供明确关闭按钮与关闭后焦点恢复。Web模态层限制背景交互并管理键盘焦点，支持Escape关闭及prefers-reduced-motion；其他平台提供对应的减少动画方式。不支持模糊或3D时使用实色面板或淡入替代。进度和计数来自实际传入数据，对空值、0、100%和越界情况做校验，显示准确数值及文字含义。拖动或翻面均提供点击替代操作。",
+  items: [
+    {
+      id: "popup-glass",
+      name: "玻璃面板浮起",
+      english: "Frosted Glass Sheet",
+      motion: "背景渐模糊，半透明面板从下方浮起，面板内的月份或进度格依次填充。",
+      scenes: "会员凭证、任务进度、成就展示；可作为成就系统的视觉参考。",
+      prompt: "生成毛玻璃浮层（Frosted Glass Sheet）：点击打开时遮罩背景的backdrop-filter从blur(0px)过渡到blur(26px)，面板底色rgba(255,255,255,0.45)，从下方上浮并由scale(0.94)经1.02回到1，避免超出屏幕。面板展示12个月份格，依据传入的已用比例从底部填充：完整格填满，最后一格按余量填充，其余留空。进度动画在1秒内完成，使用cubic-bezier(0.22,0.7,0.2,1)；关闭时反向淡出并返回原页面。",
+      notes: "26px模糊与半透明背景需真机检查性能及文字对比度；缩放峰值由原文1.12调整为1.02后回到1，是避免裁切的建议值。",
+    },
+    {
+      id: "popup-ring",
+      name: "圆环计数弹出",
+      english: "Ring Count Sheet",
+      motion: "底部面板先升起，落定后圆环绘制到目标比例，中心数字同步增长到结果。",
+      scenes: "数据统计、倒计时、任务完成度与成就进度。",
+      prompt: "生成圆环计数弹窗（Ring Count Sheet）：底部面板以cubic-bezier(0.22,0.7,0.2,1)在0.5秒内从屏幕下方升至定位，背景遮罩为rgba(0,0,0,0.4)。落定后，以相同曲线在1秒内将圆环stroke-dashoffset从完整周长绘制到C*(1-p)，其中C为圆周长，p为校验后0到1的剩余比例。中心数字从0同步增长到目标值，动画结束后精确显示最终数值、单位和剩余含义；提供关闭操作。",
+      notes: "先确定圆环表达“已完成”还是“剩余”，再统一标签、比例与中心数字；小程序可按目标平台改用Canvas等受支持能力。",
+    },
+    {
+      id: "popup-ruler",
+      name: "刻度尺扫到今天",
+      english: "Tick Ruler Sheet",
+      motion: "面板滑入，时间刻度由左到右逐根点亮，在今天所在刻度停止；编号可以原位展开。",
+      scenes: "会员有效期、打卡记录、使用时长统计。",
+      prompt: "生成刻度尺进度弹窗（Tick Ruler Sheet）：面板在0.5秒内从下方滑入，用53根刻度表示传入起止日期的时间范围。依据当前日期计算并限制今天所在索引，刻度从左到右逐根变深，每根延迟约16毫秒，今天这一根使用强黄色标记并停止，同时显示“今天”的文字和形状提示。点击显示按钮后，被遮住的普通编号原位逐字展开，再次点击可隐藏；预留固定行高，避免布局跳动。提供关闭按钮。",
+      notes: "“错开1帧”改为约16毫秒是为了明确时序，实际刷新率仍因设备而异；黄色标记不能是唯一识别方式。敏感凭证仍需权限控制。",
+    },
+    {
+      id: "popup-photo",
+      name: "照片抽屉贴合",
+      english: "Photo Drawer Sheet",
+      motion: "顶部照片轻微缩回，底部抽屉向上进入并覆盖照片下沿，随后显示进度与操作。",
+      scenes: "内容卡片、美食或景点详情、商品预览。",
+      prompt: "生成照片抽屉弹窗（Photo Drawer Sheet）：弹窗顶部照片保持容器比例，图片由scale(1.08)过渡到1，使用暗角衬托白色标题。下方抽屉用margin-top:-22px叠在照片底边，在0.5秒内从下方推入，曲线为cubic-bezier(0.22,0.7,0.2,1)。抽屉落定后进度条在1秒内从0增长到传入的剩余比例，提供准确标签和主操作按钮。照片加载失败时保留占位和标题，长内容在抽屉内滚动，并保留关闭按钮。",
+      notes: "裁切位置、叠压距离和文字对比度需要结合实际照片调整；22px是参考值，抽屉不能遮住商品关键信息。",
+    },
+    {
+      id: "popup-flip",
+      name: "点击翻面凭证",
+      english: "Flip to Reveal",
+      motion: "面板在原位绕Y轴翻转，正面基础信息与背面凭证切换，再次点击可翻回。",
+      scenes: "入场凭证、核销券、会员信息展示。",
+      prompt: "生成原地翻面面板（Flip to Reveal）：外层设置perspective:1200px，卡片以cubic-bezier(0.3,0.7,0.2,1)在0.8秒内绕Y轴从0翻到180度。正背面使用backface-visibility:hidden，背面预置rotateY(180deg)，在90度附近自然完成可见面的切换。正面为基础信息，背面显示获准展示的编号与凭证详情。使用独立的“查看凭证”和“返回正面”按钮，再点按原路径翻回；只让当前可见面参与焦点和辅助技术读取，保留外层关闭按钮。",
+      notes: "翻面和遮挡只改变展示方式，不提供身份验证或权限保护；真实核销需服务端确认状态，不能由动画结果认定有效。",
+    },
+    {
+      id: "popup-pull",
+      name: "下拉展开面板",
+      english: "Pull Down Reveal",
+      motion: "面板入场后，向下拖动下沿把手，详情区随手展开；超过阈值松手展开，否则回弹。",
+      scenes: "长内容详情、设置项、按需展示的补充信息。",
+      prompt: "生成下拉展开面板（Pull Down Reveal）：底部面板弹入落定，在下沿显示把手和虚线。向下拖动时，详情区沿虚线展开，按有效拖动距离的2倍映射展开高度，并限制在0到最大可展开高度H之间；这里将原文“2倍缓动”明确为位移倍率。松手时，若展开高度超过0.4H，使用300毫秒cubic-bezier(0.22,0.7,0.2,1)展开到H，否则回到0。H按可用屏幕空间计算，长内容内部滚动；处理手势取消，避免与内容滚动及下滑关闭冲突。另提供“展开详情／收起详情”按钮和独立关闭按钮。",
+      notes: "“2倍缓动”的原意不明确，这里给出可执行的位移映射建议；拖动阈值、方向和手感需要真机调试，不能挤出屏幕或劫持页面滚动。",
+    },
+  ],
+  corrections: [
+    ["曲线参数", "原文cubic-bezier(2,7,2,1)和cubic-bezier(3,7,2,1)的横坐标超出0—1范围，属于无效CSS曲线。提示词改用(0.22,0.7,0.2,1)和(0.3,0.7,0.2,1)，并不声称与原视频手感完全一致。"],
+    ["透明度", "45%不透明度写为rgba(255,255,255,0.45)。原文alpha为45时会被截取到1，面板会变成不透明。"],
+    ["平台适配", "backdrop-filter、SVG路径动画、3D翻面与手势API的支持因Web、小程序和跨端框架而异；先明确目标平台，再选择实现及降级方案。"],
+    ["生成后验收", "检查打开、关闭、连续点击、数据边界、长文本、安全区、性能、减少动画设置，以及键盘或触控替代操作；提示词不能替代测试。"],
+  ],
+};
+
 export const developmentGuide = {
   id: "mini-program-development",
   title: "AI开发微信小程序：完整开发路线",
@@ -1826,6 +1901,7 @@ export const safeguards = [
 ];
 
 export const sourceNotes = [
+  "六种弹窗交互设计来自用户粘贴的教程摘要；英文名称为教程中的方案标签。提示词保留交互意图，修正无效CSS参数并补充平台适配、访问性与验收建议，未核验原视频或实际动效。",
   "微信小程序完整开发路线来自用户分享的AI开发与变现教程摘要及后续补充；2000元为作者自述，未核验收入证据。数据存储、商业验证与运营安排为实施建议，平台当期规则未外部核验。",
   "资料来自本次对话两批长文本、此前整理回复、一份用户粘贴文本附件，以及十张好运成串截图。重复内容归并，近似购物车截图去重。",
   "这是项目研究与产品策划资料库，不是已运行的交易系统，不提供真实下单、抽奖、支付或商家结算。",
@@ -1899,6 +1975,21 @@ export function getSearchRecords() {
       text: cells.join(" "),
       page: "engine",
       kind: "产品引擎",
+    });
+  records.push({
+    id: "interaction-principles",
+    title: popupDesign.title,
+    text: [popupDesign.intro, popupDesign.boundary, ...popupDesign.principles, popupDesign.commonPrompt, ...popupDesign.corrections.flat()].join(" "),
+    page: "interactions",
+    kind: "交互设计",
+  });
+  for (const item of popupDesign.items)
+    records.push({
+      id: item.id,
+      title: item.name,
+      text: [item.english, item.motion, item.scenes, item.prompt, item.notes].join(" "),
+      page: "interactions",
+      kind: "弹窗交互",
     });
   for (const [title, ...cells] of [...merchants, ...services])
     records.push({
@@ -2014,6 +2105,11 @@ export function exportMarkdown() {
     table(["能力", "操作", "商品", "规则"], engines) +
     table(["模块", "内容", "阶段"], modules) +
     table(["环节", "用户端", "商家端"], flow);
+  out += `## ${popupDesign.title}\n\n${popupDesign.intro}\n\n${popupDesign.boundary}\n\n`;
+  out += "### 核心设计逻辑\n\n" + popupDesign.principles.map((text) => "- " + text).join("\n") + "\n\n";
+  for (const item of popupDesign.items)
+    out += `### ${item.name}（${item.english}）\n\n动效：${item.motion}\n\n适用场景：${item.scenes}\n\n实现要点：${item.notes}\n\nAI生成提示词：\n\n${item.prompt}\n\n${popupDesign.commonPrompt}\n\n`;
+  out += "### 参数修正与验收\n\n" + table(["方面", "说明"], popupDesign.corrections);
   out += "## 场景\n\n" + table(["场景", "商品"], scenarios);
   out += "## 截图证据\n\n";
   for (const e of evidence)

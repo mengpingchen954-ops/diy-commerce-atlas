@@ -12,6 +12,7 @@ import {
   selfOperation,
   leisureCrafts,
   developmentGuide,
+  popupDesign,
 } from "../src/content.js";
 
 test("所有品类保留独立制作规则、交付方式和边界", () => {
@@ -129,6 +130,31 @@ test("公开截图副本存在，原始附件不属于站点资源", () => {
       new URL("../public/references/bracelet-detail.jpg", import.meta.url),
     ),
   );
+});
+
+test("六种弹窗的提示词可检索及导出，生成参数使用有效曲线", () => {
+  const records = getSearchRecords();
+  const markdown = exportMarkdown();
+  assert.equal(popupDesign.items.length, 6);
+  assert.equal(new Set(popupDesign.items.map((item) => item.id)).size, 6);
+  for (const item of popupDesign.items) {
+    const record = records.find((r) => r.page === "interactions" && r.id === item.id);
+    assert.ok(record, item.id);
+    for (const text of [item.name, item.english, item.motion, item.scenes, item.prompt, item.notes]) {
+      assert.ok((record.title + record.text).includes(text), text);
+      assert.ok(markdown.includes(text), text);
+    }
+    for (const match of item.prompt.matchAll(/cubic-bezier\(([^)]+)\)/g)) {
+      const coordinates = match[1].split(",").map(Number);
+      assert.equal(coordinates.length, 4);
+      assert.ok(coordinates.every(Number.isFinite));
+      assert.ok(coordinates[0] >= 0 && coordinates[0] <= 1);
+      assert.ok(coordinates[2] >= 0 && coordinates[2] <= 1);
+    }
+  }
+  for (const text of [popupDesign.title, popupDesign.intro, popupDesign.boundary, popupDesign.commonPrompt, ...popupDesign.principles, ...popupDesign.corrections.flat()])
+    assert.ok(markdown.includes(text), text);
+  assert.equal(new Set(records.map((r) => r.page + r.id)).size, records.length);
 });
 
 test("完整开发路线的步骤、交付和边界同步进入搜索与下载", () => {

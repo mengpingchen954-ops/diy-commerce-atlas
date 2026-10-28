@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { evidence, categories, selfOperation, developmentGuide } from '../src/content.js';
+import { evidence, categories, selfOperation, developmentGuide, popupDesign } from '../src/content.js';
 
 const base = new URL(process.argv[2] || 'https://mengpingchen954-ops.github.io/diy-commerce-atlas/');
 const home = await fetch(base);
@@ -31,6 +31,11 @@ for (const category of categories) {
   for (const item of category.items) assert.ok(markdown.includes(item), item);
 }
 assert.ok(markdown.includes('定价草案'));
+for (const item of popupDesign.items) {
+  for (const text of [item.name, item.english, item.motion, item.scenes, item.prompt, item.notes])
+    assert.ok(markdown.includes(text), text);
+}
+assert.ok(markdown.includes(popupDesign.commonPrompt));
 for (const step of developmentGuide.steps) {
   for (const text of [step.title, ...step.tasks, step.deliver, step.gate])
     assert.ok(markdown.includes(text), text);
