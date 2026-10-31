@@ -215,7 +215,7 @@ export default function Categories({
       </Notice>
       <Section title={leisureCrafts.title} description={leisureCrafts.intro}>
         <details className="craft-guide">
-          <summary>查看12种手作：做什么、吸引点与对应品类</summary>
+          <summary>查看{leisureCrafts.items.length}种手作：做什么、吸引点与对应品类</summary>
           <DataTable
             headers={["手作类型", "具体做什么", "体验吸引点", "深入了解"]}
             rows={leisureCrafts.items.map((craft) => [

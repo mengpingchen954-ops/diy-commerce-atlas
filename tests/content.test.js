@@ -16,7 +16,7 @@ import {
 } from "../src/content.js";
 
 test("所有品类保留独立制作规则、交付方式和边界", () => {
-  assert.equal(categories.length, 20);
+  assert.equal(categories.length, 21);
   assert.equal(new Set(categories.map((c) => c.id)).size, categories.length);
   for (const c of categories) {
     for (const field of [
@@ -54,6 +54,9 @@ test("关键原始方向可通过商品别名检索，多词搜索必须全部�
     "口脂",
     "积木",
     "微缩",
+    "捏捏乐",
+    "硅胶捏捏",
+    "慢回弹",
   ])
     assert.ok(
       categories.some((c) => matchesCategory(c, word)),
@@ -182,7 +185,7 @@ test("完整开发路线的步骤、交付和边界同步进入搜索与下载",
 });
 
 test("休闲手作关联有效，体验建议同时进入品类搜索、全站搜索与下载", () => {
-  assert.equal(leisureCrafts.items.length, 12);
+  assert.equal(leisureCrafts.items.length, 13);
   assert.equal(leisureCrafts.items.filter((craft) => craft.loop).length, 5);
   const records = getSearchRecords();
   const markdown = exportMarkdown();
